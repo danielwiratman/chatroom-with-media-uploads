@@ -20,7 +20,7 @@ type DBTX interface {
 	QueryRowContext(context.Context, string, ...interface{}) *sql.Row
 }
 
-type UserRepository interface {
+type Repository interface {
 	Create(ctx context.Context, dbtx DBTX, user *User) (*User, error)
 	GetByEmail(ctx context.Context, dbtx DBTX, email string) (*User, error)
 }
@@ -52,7 +52,7 @@ type LoginUserRes struct {
 	Token    string `json:"token"`
 }
 
-type UserService interface {
+type Service interface {
 	Create(ctx context.Context, req *CreateUserReq) (*CreateUserRes, error)
 	Login(ctx context.Context, req *LoginUserReq) (*LoginUserRes, error)
 }

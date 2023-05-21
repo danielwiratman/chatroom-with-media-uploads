@@ -7,15 +7,15 @@ import (
 	"github.com/golang-jwt/jwt/v5"
 )
 
-type UserFiberHandler struct {
-	service UserService
+type FiberHandler struct {
+	service Service
 }
 
-func NewUserFiberHandler(service UserService) *UserFiberHandler {
-	return &UserFiberHandler{service: service}
+func NewFiberHandler(service Service) *FiberHandler {
+	return &FiberHandler{service: service}
 }
 
-func (h *UserFiberHandler) Create(c *fiber.Ctx) error {
+func (h *FiberHandler) Create(c *fiber.Ctx) error {
 	req := &CreateUserReq{}
 	if err := c.BodyParser(req); err != nil {
 		return err
@@ -27,7 +27,7 @@ func (h *UserFiberHandler) Create(c *fiber.Ctx) error {
 	return c.JSON(res)
 }
 
-func (h *UserFiberHandler) Login(c *fiber.Ctx) error {
+func (h *FiberHandler) Login(c *fiber.Ctx) error {
 	req := &LoginUserReq{}
 	if err := c.BodyParser(req); err != nil {
 		return err
@@ -46,7 +46,7 @@ func (h *UserFiberHandler) Login(c *fiber.Ctx) error {
 	return c.JSON(res)
 }
 
-func (h *UserFiberHandler) Logout(c *fiber.Ctx) error {
+func (h *FiberHandler) Logout(c *fiber.Ctx) error {
 	cookie := &fiber.Cookie{
 		Name:     "jwt",
 		Value:    "",
@@ -57,7 +57,7 @@ func (h *UserFiberHandler) Logout(c *fiber.Ctx) error {
 	return c.JSON(nil)
 }
 
-func (h *UserFiberHandler) TokenCheck(c *fiber.Ctx) error {
+func (h *FiberHandler) TokenCheck(c *fiber.Ctx) error {
 	claims := c.Locals("claims").(jwt.MapClaims)
 	return c.JSON(claims)
 }

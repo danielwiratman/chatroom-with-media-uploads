@@ -9,16 +9,16 @@ import (
 	"github.com/danielwiratman/chatroom-with-media-uploads/util"
 )
 
-type UserServiceImpl struct {
-	repo UserRepository
+type ServiceImpl struct {
+	repo Repository
 	db   *sql.DB
 }
 
-func NewUserService(repo UserRepository, db *sql.DB) UserService {
-	return &UserServiceImpl{repo: repo, db: db}
+func NewService(repo Repository, db *sql.DB) Service {
+	return &ServiceImpl{repo: repo, db: db}
 }
 
-func (s *UserServiceImpl) Create(ctx context.Context, req *CreateUserReq) (*CreateUserRes, error) {
+func (s *ServiceImpl) Create(ctx context.Context, req *CreateUserReq) (*CreateUserRes, error) {
   if (req.Username == "") || (req.Email == "") || (req.Password == "") {
     return nil, errors.New("name, username, email and password are required") 
   }
@@ -51,7 +51,7 @@ func (s *UserServiceImpl) Create(ctx context.Context, req *CreateUserReq) (*Crea
 	}, nil
 }
 
-func (s *UserServiceImpl) Login(ctx context.Context, req *LoginUserReq) (*LoginUserRes, error) {
+func (s *ServiceImpl) Login(ctx context.Context, req *LoginUserReq) (*LoginUserRes, error) {
 	tx, err := s.db.BeginTx(ctx, nil)
 	user, err := s.repo.GetByEmail(ctx, tx, req.Email)
 	if err != nil {

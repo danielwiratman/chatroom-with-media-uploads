@@ -4,13 +4,13 @@ import (
 	"context"
 )
 
-type UserRepositoryImpl struct{}
+type RepositoryImpl struct{}
 
-func NewUserRepository() UserRepository {
-	return &UserRepositoryImpl{}
+func NewRepository() Repository {
+	return &RepositoryImpl{}
 }
 
-func (r *UserRepositoryImpl) Create(ctx context.Context, dbtx DBTX, user *User) (*User, error) {
+func (r *RepositoryImpl) Create(ctx context.Context, dbtx DBTX, user *User) (*User, error) {
 	stmt, err := dbtx.PrepareContext(ctx, "INSERT INTO user_profile (name, username, email, password) VALUES ($1, $2, $3, $4) RETURNING id")
 	if err != nil {
 		return nil, err
@@ -25,7 +25,7 @@ func (r *UserRepositoryImpl) Create(ctx context.Context, dbtx DBTX, user *User) 
 	return user, nil
 }
 
-func (r *UserRepositoryImpl) GetByEmail(ctx context.Context, dbtx DBTX, email string) (*User, error) {
+func (r *RepositoryImpl) GetByEmail(ctx context.Context, dbtx DBTX, email string) (*User, error) {
 	stmt, err := dbtx.PrepareContext(ctx, "SELECT id, name, username, email, password FROM user_profile WHERE email = $1")
 	if err != nil {
 		return nil, err
