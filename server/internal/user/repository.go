@@ -2,6 +2,8 @@ package user
 
 import (
 	"context"
+
+	"github.com/danielwiratman/chatroom-with-media-uploads/util"
 )
 
 type RepositoryImpl struct{}
@@ -10,7 +12,7 @@ func NewRepository() Repository {
 	return &RepositoryImpl{}
 }
 
-func (r *RepositoryImpl) Create(ctx context.Context, dbtx DBTX, user *User) (*User, error) {
+func (r *RepositoryImpl) Create(ctx context.Context, dbtx util.DBTX, user *User) (*User, error) {
 	stmt, err := dbtx.PrepareContext(ctx, "INSERT INTO user_profile (name, username, email, password) VALUES ($1, $2, $3, $4) RETURNING id")
 	if err != nil {
 		return nil, err
@@ -25,7 +27,7 @@ func (r *RepositoryImpl) Create(ctx context.Context, dbtx DBTX, user *User) (*Us
 	return user, nil
 }
 
-func (r *RepositoryImpl) GetByEmail(ctx context.Context, dbtx DBTX, email string) (*User, error) {
+func (r *RepositoryImpl) GetByEmail(ctx context.Context, dbtx util.DBTX, email string) (*User, error) {
 	stmt, err := dbtx.PrepareContext(ctx, "SELECT id, name, username, email, password FROM user_profile WHERE email = $1")
 	if err != nil {
 		return nil, err

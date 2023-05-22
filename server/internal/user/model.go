@@ -2,7 +2,7 @@ package user
 
 import (
 	"context"
-	"database/sql"
+	"github.com/danielwiratman/chatroom-with-media-uploads/util"
 )
 
 type User struct {
@@ -13,16 +13,9 @@ type User struct {
 	Password string `json:"password"`
 }
 
-type DBTX interface {
-	ExecContext(ctx context.Context, query string, args ...interface{}) (sql.Result, error)
-	PrepareContext(context.Context, string) (*sql.Stmt, error)
-	QueryContext(context.Context, string, ...interface{}) (*sql.Rows, error)
-	QueryRowContext(context.Context, string, ...interface{}) *sql.Row
-}
-
 type Repository interface {
-	Create(ctx context.Context, dbtx DBTX, user *User) (*User, error)
-	GetByEmail(ctx context.Context, dbtx DBTX, email string) (*User, error)
+	Create(ctx context.Context, dbtx util.DBTX, user *User) (*User, error)
+	GetByEmail(ctx context.Context, dbtx util.DBTX, email string) (*User, error)
 }
 
 type CreateUserReq struct {
