@@ -43,10 +43,10 @@ type UserRoom struct {
 }
 
 type UserRoomRepository interface {
-  Create(ctx context.Context, dbtx util.DBTX, userRoom *UserRoom) (*UserRoom, error)
+	Create(ctx context.Context, dbtx util.DBTX, userRoom *UserRoom) (*UserRoom, error)
 }
 
 type ChatService interface {
-  CreateRoom(ctx context.Context, dbtx util.DBTX, req CreateRoomReq) (*CreateRoomRes, error)
-  GetRoomsByUserID(ctx context.Context, dbtx util.DBTX, userID int) ([]*Room, error)
+	CreateRoom(ctx context.Context, dbtx util.DBTX, req CreateRoomReq) (*CreateRoomRes, error)
+	GetRoomsByUserID(ctx context.Context, dbtx util.DBTX, userID int) ([]*Room, error)
 }
