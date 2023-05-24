@@ -2,7 +2,6 @@ package user
 
 import (
 	"os"
-
 	"github.com/gofiber/fiber/v2"
 	"github.com/golang-jwt/jwt/v5"
 )
