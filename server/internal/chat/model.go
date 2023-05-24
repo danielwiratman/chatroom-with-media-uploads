@@ -3,7 +3,6 @@ package chat
 import (
 	"context"
 	"time"
-
 	"github.com/danielwiratman/chatroom-with-media-uploads/util"
 )
 
